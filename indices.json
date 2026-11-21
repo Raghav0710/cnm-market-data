@@ -1,11 +1,41 @@
 {
  "asOf": "20 Nov 2026",
- "updated": "22 Nov 2026 02:10 IST",
+ "updated": "22 Nov 2026 02:13 IST",
  "indices": [
-  {"name": "NIFTY 50", "value": 25800.6, "change": 286.3, "pct": 1.12, "date": "20 Nov 2026"},
-  {"name": "SENSEX", "value": 83919.71, "change": 897.96, "pct": 1.08, "date": "20 Nov 2026"},
-  {"name": "BANK NIFTY", "value": 64635.2, "change": 1572.2, "pct": 2.49, "date": "20 Nov 2026"},
-  {"name": "NIFTY MIDCAP 100", "value": 62028.95, "change": 404.55, "pct": 0.66, "date": "20 Nov 2026"},
-  {"name": "GIFT NIFTY", "value": 25836.0, "change": 90.5, "pct": 0.35, "date": "21 Nov 2026"}
+  {
+   "name": "NIFTY 50",
+   "value": 25800.6,
+   "change": 286.3,
+   "pct": 1.12,
+   "date": "20 Nov 2026"
+  },
+  {
+   "name": "SENSEX",
+   "value": 83919.71,
+   "change": 897.96,
+   "pct": 1.08,
+   "date": "20 Nov 2026"
+  },
+  {
+   "name": "BANK NIFTY",
+   "value": 64635.2,
+   "change": 1572.2,
+   "pct": 2.49,
+   "date": "20 Nov 2026"
+  },
+  {
+   "name": "NIFTY MIDCAP 100",
+   "value": 62028.95,
+   "change": 404.55,
+   "pct": 0.66,
+   "date": "20 Nov 2026"
+  },
+  {
+   "name": "GIFT NIFTY",
+   "value": 25836.0,
+   "change": 90.5,
+   "pct": 0.35,
+   "date": "21 Nov 2026"
+  }
  ]
 }
