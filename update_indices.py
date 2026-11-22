@@ -5,7 +5,7 @@ chart endpoint (end-of-day). GIFT Nifty is not on Yahoo, so its entry is kept fr
 existing file (it is updated separately) and only replaced if a value is supplied.
 Standard library only, so it runs on a bare GitHub Actions runner.
 """
-import json, os, sys, time, urllib.request
+import json, os, sys, time, urllib.request, urllib.parse
 from datetime import datetime, timezone, timedelta
 
 IST = timezone(timedelta(hours=5, minutes=30))
@@ -38,7 +38,6 @@ def fetch(symbol):
             "pct": round(change / prev * 100, 2), "date": day.strftime("%d %b %Y")}
 
 def main():
-    import urllib.parse  # noqa: F401 (used in fetch)
     old = {}
     if os.path.exists(OUT):
         with open(OUT) as f:
@@ -52,7 +51,15 @@ def main():
         except Exception as e:
             print(f"WARN {name}: {e}", file=sys.stderr)
             if name in old_by_name: rows.append(old_by_name[name])
+    # GIFT NIFTY lives in gift.json (updated each morning by a separate job); fall back to the old entry.
     gift = old_by_name.get("GIFT NIFTY")
+    gpath = os.path.join(os.path.dirname(OUT), "gift.json")
+    if os.path.exists(gpath):
+        try:
+            with open(gpath) as f:
+                gift = {"name": "GIFT NIFTY", **{k: v for k, v in json.load(f).items() if k != "name"}}
+        except Exception as e:
+            print(f"WARN gift.json: {e}", file=sys.stderr)
     if gift: rows.append(gift)
     if not rows: sys.exit("no data")
     as_of = max(dates, key=lambda s: datetime.strptime(s, "%d %b %Y")) if dates else old.get("asOf")
