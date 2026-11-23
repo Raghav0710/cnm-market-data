@@ -14,28 +14,44 @@ BOARD = [  # (display name, Yahoo symbol)
     ("NIFTY 50", "^NSEI"),
     ("SENSEX", "^BSESN"),
     ("BANK NIFTY", "^NSEBANK"),
-    ("NIFTY MIDCAP 100", "NIFTY_MIDCAP_100.NS"),
+    ("NIFTY MIDCAP 100", "NIFTY_MIDCAP_100.NS|^CNXMIDCAP"),  # alternates tried in order
 ]
 
-def fetch(symbol):
+def _chart(symbol, rng):
     url = ("https://query1.finance.yahoo.com/v8/finance/chart/"
-           + urllib.parse.quote(symbol) + "?range=10d&interval=1d")
+           + urllib.parse.quote(symbol) + "?range=" + rng + "&interval=1d")
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (cnm-market-data)"})
     for attempt in range(4):
         try:
             with urllib.request.urlopen(req, timeout=20) as r:
-                res = json.load(r)["chart"]["result"][0]
-            break
-        except Exception as e:  # rate limits / transient errors
+                return json.load(r)["chart"]["result"][0]
+        except Exception:  # rate limits / transient errors
             if attempt == 3: raise
             time.sleep(5 * (attempt + 1))
-    pts = [(t, c) for t, c in zip(res["timestamp"], res["indicators"]["quote"][0]["close"]) if c is not None]
-    (t0, prev), (t1, last) = pts[-2], pts[-1]
-    # Ignore today's partial bar if the market is still open (run happens after close anyway).
+
+def _one(symbol):
+    res = _chart(symbol, "10d")
+    pts = [(t, c) for t, c in zip(res.get("timestamp") or [], (res.get("indicators", {}).get("quote") or [{}])[0].get("close") or []) if c is not None]
+    if len(pts) >= 2:
+        (t0, prev), (t1, last) = pts[-2], pts[-1]
+    else:
+        # Daily bars missing for this symbol today: use the summary (last price vs previous close).
+        meta = _chart(symbol, "1d")["meta"]
+        last, prev, t1 = meta["regularMarketPrice"], meta.get("chartPreviousClose") or meta["previousClose"], meta["regularMarketTime"]
     day = datetime.fromtimestamp(t1, IST)
     change = round(last - prev, 2)
     return {"value": round(last, 2), "change": change,
             "pct": round(change / prev * 100, 2), "date": day.strftime("%d %b %Y")}
+
+def fetch(symbols):
+    err = None
+    for sym in symbols.split("|"):
+        try:
+            return _one(sym)
+        except Exception as e:
+            err = e
+            print(f"WARN {sym}: {e}", file=sys.stderr)
+    raise err
 
 def main():
     old = {}
