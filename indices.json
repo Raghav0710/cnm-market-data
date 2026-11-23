@@ -1,6 +1,6 @@
 {
  "asOf": "23 Nov 2026",
- "updated": "23 Nov 2026 16:52 IST",
+ "updated": "23 Nov 2026 16:54 IST",
  "indices": [
   {
    "name": "NIFTY 50",
@@ -25,10 +25,10 @@
   },
   {
    "name": "NIFTY MIDCAP 100",
-   "value": 62028.95,
-   "change": 404.55,
-   "pct": 0.66,
-   "date": "20 Nov 2026"
+   "value": 61403.2,
+   "change": -627.8,
+   "pct": -1.01,
+   "date": "23 Nov 2026"
   },
   {
    "name": "GIFT NIFTY",
