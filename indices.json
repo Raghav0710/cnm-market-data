@@ -1,27 +1,27 @@
 {
  "asOf": "23 Nov 2026",
- "updated": "23 Nov 2026 16:54 IST",
+ "updated": "24 Nov 2026 03:44 IST",
  "indices": [
   {
    "name": "NIFTY 50",
-   "value": 25349.65,
-   "change": -450.95,
-   "pct": -1.75,
-   "date": "23 Nov 2026"
+   "value": 25800.6,
+   "change": 286.3,
+   "pct": 1.12,
+   "date": "20 Nov 2026"
   },
   {
    "name": "SENSEX",
-   "value": 82435.99,
-   "change": -1483.72,
-   "pct": -1.77,
-   "date": "23 Nov 2026"
+   "value": 83919.71,
+   "change": 897.96,
+   "pct": 1.08,
+   "date": "20 Nov 2026"
   },
   {
    "name": "BANK NIFTY",
-   "value": 62585.35,
-   "change": -2049.85,
-   "pct": -3.17,
-   "date": "23 Nov 2026"
+   "value": 64635.2,
+   "change": 1572.2,
+   "pct": 2.49,
+   "date": "20 Nov 2026"
   },
   {
    "name": "NIFTY MIDCAP 100",
